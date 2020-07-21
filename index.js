@@ -275,5 +275,4 @@ var Polyfit = (function () {
     };
     return Polyfit;
 }());
-exports.__esModule = true;
-exports["default"] = Polyfit;
+exports.Polyfit = Polyfit;
