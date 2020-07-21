@@ -17,7 +17,7 @@ interface NumberArray {
   [index: number]: number;
 }
 
-class Polyfit {
+export class Polyfit {
   private x: NumberArray;
   private y: NumberArray;
   private FloatXArray: Float32ArrayConstructor | Float64ArrayConstructor;
@@ -354,5 +354,3 @@ class Polyfit {
     return eqParts.join(" + ");
   }
 }
-
-export default Polyfit;
