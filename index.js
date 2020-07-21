@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var Polyfit = (function () {
     /**
      * Polyfit
@@ -15,7 +15,7 @@ var Polyfit = (function () {
         if (!((x instanceof Array && y instanceof Array) ||
             (x instanceof Float32Array && y instanceof Float32Array) ||
             (x instanceof Float64Array && y instanceof Float64Array))) {
-            throw new Error('x and y must be arrays');
+            throw new Error("x and y must be arrays");
         }
         if (x instanceof Float32Array) {
             this.FloatXArray = Float32Array;
@@ -25,7 +25,7 @@ var Polyfit = (function () {
         }
         // Make sure we have equal lengths
         if (x.length !== y.length) {
-            throw new Error('x and y must have the same length');
+            throw new Error("x and y must have the same length");
         }
         this.x = x;
         this.y = y;
@@ -162,7 +162,7 @@ var Polyfit = (function () {
         if (n > 2) {
             var a = 0;
             for (var i = 0; i < n; i++) {
-                a += Math.pow((Polyfit.regress(this.x[i], terms) - this.y[i]), 2);
+                a += Math.pow(Polyfit.regress(this.x[i], terms) - this.y[i], 2);
             }
             r = Math.sqrt(a / (n - 2));
         }
@@ -178,7 +178,7 @@ var Polyfit = (function () {
         var n = this.x.length;
         var r;
         var c;
-        var rs = 2 * (++p) - 1;
+        var rs = 2 * ++p - 1;
         var i;
         var m = [];
         // Initialize array with 0 values
@@ -225,7 +225,7 @@ var Polyfit = (function () {
             }
         }
         Polyfit.gaussJordanEchelonize(m);
-        var terms = this.FloatXArray && new this.FloatXArray(m.length) || [];
+        var terms = (this.FloatXArray && new this.FloatXArray(m.length)) || [];
         for (i = m.length - 1; i >= 0; i--) {
             terms[i] = m[i][p];
         }
@@ -240,17 +240,17 @@ var Polyfit = (function () {
      */
     Polyfit.prototype.getPolynomial = function (degree) {
         if (isNaN(degree) || degree < 0) {
-            throw new Error('Degree must be a positive integer');
+            throw new Error("Degree must be a positive integer");
         }
         var terms = this.computeCoefficients(degree);
         var eqParts = [];
         eqParts.push(terms[0].toPrecision());
         for (var i = 1, len = terms.length; i < len; i++) {
-            eqParts.push(terms[i] + ' * Math.pow(x, ' + i + ')');
+            eqParts.push(terms[i] + " * Math.pow(x, " + i + ")");
         }
-        var expr = 'return ' + eqParts.join(' + ') + ';';
+        var expr = "return " + eqParts.join(" + ") + ";";
         /* jshint evil: true */
-        return new Function('x', expr);
+        return new Function("x", expr);
         /* jshint evil: false */
     };
     /**
@@ -262,17 +262,18 @@ var Polyfit = (function () {
      */
     Polyfit.prototype.toExpression = function (degree) {
         if (isNaN(degree) || degree < 0) {
-            throw new Error('Degree must be a positive integer');
+            throw new Error("Degree must be a positive integer");
         }
         var terms = this.computeCoefficients(degree);
         var eqParts = [];
         var len = terms.length;
         eqParts.push(terms[0].toPrecision());
         for (var i = 1; i < len; i++) {
-            eqParts.push(terms[i] + 'x^' + i);
+            eqParts.push(terms[i] + "x^" + i);
         }
-        return eqParts.join(' + ');
+        return eqParts.join(" + ");
     };
     return Polyfit;
-})();
-module.exports = Polyfit;
+}());
+exports.__esModule = true;
+exports["default"] = Polyfit;
